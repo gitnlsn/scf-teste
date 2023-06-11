@@ -1,21 +1,22 @@
-var data =  require("./fakeData");
+let { data, log } = require("./fakeData");
+const { incrementGetRequestLog } = require("./fakeData")
 
 const getUser = ( req, res, next ) => {
-    
-    var name =  req.query.name;
+    const { name } =  req.query;
 
-    for(let i = 0; i < data.length;  i++) {
-        if(i.name == name) {
-            res.send(data[i]);
-        }
+    const existingUser = data.find(user => user.name === name)
+    
+    if (existingUser !== undefined) {
+        incrementGetRequestLog(existingUser.id)
+        return res.status(200).json(existingUser)
     }
 
+    return res.status(404).json({ error: "User does not exist." })
 };
 
 const getUsers = ( req, res, next ) => {
-    
-    res.send(data);
-    
+    incrementGetRequestLog()
+    return res.status(200).json(data);
 };
 
 module.exports = {

@@ -1,15 +1,19 @@
-var data =  require("./fakeData");
+var { data } =  require("./fakeData");
 
-module.exports = function(req, res) {
-  
-    var name =  req.query.name;
+const deleteUser = (req, res) => {
+    const { name } =  req.query;
 
-    for(let i = 0; i < data.length;  i++) {
-        if(i.name == name) {
-            data[i] = null;
-        }
+    const filteredUserList = data.filter(user => user.name !== name)
+    const didNotDeleteUser = filteredUserList.length === data.length
+
+    if (didNotDeleteUser) {
+        return res.status(404).json({ error: "User does not exist" })
     }
 
-    res.send("success");
-
+    data = filteredUserList
+    return res.status(200).json({ status: "success" });
 };
+
+module.exports = {
+    deleteUser
+}
