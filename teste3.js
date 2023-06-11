@@ -4,9 +4,9 @@ const deleteUser = (req, res) => {
     const { name } =  req.query;
 
     const filteredUserList = data.filter(user => user.name !== name)
-    const didDeleteUser = filteredUserList.length === data.length
+    const didNotDeleteUser = filteredUserList.length === data.length
 
-    if (didDeleteUser) {
+    if (didNotDeleteUser) {
         return res.status(404).json({ error: "User does not exist" })
     }
 
