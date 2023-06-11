@@ -7,10 +7,10 @@ const getUser = ( req, res, next ) => {
     const existingUser = data.find(user => user.name === name)
     
     if (existingUser !== undefined) {
+        incrementGetRequestLog(existingUser.id)
         return res.status(200).json(existingUser)
     }
 
-    incrementGetRequestLog(existingUser.id)
     return res.status(404).json({ error: "User does not exist." })
 };
 
