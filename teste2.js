@@ -1,17 +1,21 @@
-var data =  require("./fakeData");
+const { data, log } =  require("./fakeData");
 
-module.exports = function(req, res){
-  
-    var name =  req.body.name;
-    var jov =  req.body.job;
+const createUser = (req, res) => {
+    const { name, job } =  req.body;
     
-    var newUser = {
-        name: name,
-        job: job,
+    const newId = Math.max(null, data.map(user =>  user.id)) + 1
+    
+    const newUser = {
+        id: newId,
+        name,
+        job,
     }
 
     data.push(newUser)
-    
-    res.send(newUser);
-
+    log.push({ id: newId, getRequests: 0 })
+    return res.send(newUser);
 };
+
+module.exports = {
+    createUser
+}
