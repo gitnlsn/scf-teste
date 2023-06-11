@@ -8,4 +8,14 @@ const fakeData  =  [
 ]
 
 
-module.exports = fakeData;
+const log = [
+    {
+        id: 1,
+        getRequests: 0
+    }
+]
+
+module.exports = {
+    fakeData,
+    getRequestsQuantity
+};
